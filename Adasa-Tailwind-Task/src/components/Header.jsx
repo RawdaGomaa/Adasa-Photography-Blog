@@ -5,7 +5,7 @@ import { NavLink, Link } from 'react-router-dom';
 
 function SearchIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="10.8" cy="10.8" r="6.4" fill="none" stroke="currentColor" strokeWidth="2" />
       <path d="M15.7 15.7 21 21" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
@@ -24,12 +24,16 @@ function LensMark() {
 
 function MenuIcon({ open }) {
   return open ? (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
-      <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <svg viewBox="0 0 24 24" className="w-7 h-7" aria-hidden="true">
+      <path d="m6 6 12 12M18 6 6 18"
+        fill="none" stroke="currentColor"
+        strokeWidth="2" strokeLinecap="round" />
     </svg>
   ) : (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
-      <path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <svg viewBox="0 0 24 24" className="w-7 h-7" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18"
+        fill="none" stroke="currentColor"
+        strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -42,9 +46,14 @@ export default function Header() {
   return (
     <header className={tw("site-header sticky top-0 z-50 relative")}>
 
-      <div className={tw("container header-inner mx-auto grid items-center max-[640px]:[display:flex] max-[640px]:[height:76px] max-[640px]:[justify-content:space-between] max-[640px]:[gap:12px]")}>
+      <div className="container header-inner mx-auto grid items-center
+        max-[640px]:!flex
+        max-[640px]:!h-[112px]
+        max-[640px]:!justify-between
+        max-[640px]:!px-6
+        max-[640px]:!gap-3">
 
-        {/* Logo */}
+        {/* Logo - Right */}
         <Link
           to="/"
           className={tw("brand inline-flex items-center")}
@@ -63,7 +72,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav
-          className={tw("main-nav flex items-center max-[640px]:[display:none]")}
+          className="main-nav flex items-center max-[640px]:!hidden"
           aria-label="التنقل الرئيسي"
         >
           <NavLink to="/" className={tw(({ isActive }) => isActive ? 'active' : '')}>
@@ -80,24 +89,28 @@ export default function Header() {
         </nav>
 
         {/* Desktop Actions */}
-        <div className={tw("header-left flex items-center max-[640px]:[display:none]")}>
+        <div className="header-left flex items-center max-[640px]:!hidden">
           <Link className={tw("header-cta")} to="/blog">
             ابدأ القراءة
           </Link>
 
-          <Link className={tw("header-search")} to="/blog" aria-label="البحث في المقالات">
+          <Link className={tw("header-search")} to="/blog" aria-label="البحث">
             <SearchIcon />
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Hamburger - Left */}
         <button
           type="button"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen(prev => !prev)}
           aria-label={menuOpen ? "إغلاق القائمة" : "فتح القائمة"}
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
-          className={tw("hidden max-[640px]:[display:flex] [width:44px] [height:44px] [align-items:center] [justify-content:center] [background:#171717] [border:1px_solid_#292929] [border-radius:12px] [color:#fff] [flex-shrink:0]")}
+          className="hidden max-[640px]:!flex
+            items-center justify-center
+            w-10 h-10 shrink-0
+            !bg-transparent !border-0 !rounded-none
+            !p-0 text-[#929292]"
         >
           <MenuIcon open={menuOpen} />
         </button>
@@ -108,38 +121,52 @@ export default function Header() {
       {menuOpen && (
         <div
           id="mobile-navigation"
-          className={tw("absolute left-3 right-3 top-full z-[60] [background:#161616] [border:1px_solid_#292929] [border-radius:20px] [padding:12px] [box-shadow:0_15px_40px_#0009] min-[641px]:[display:none]")}
+          className="absolute top-full left-4 right-4 z-[60]
+            rounded-[22px] border border-[#292929]
+            bg-[#161616] p-4 shadow-2xl
+            min-[641px]:hidden"
         >
-          <nav className={tw("flex flex-col [gap:7px]")} aria-label="قائمة الموبايل">
+          <nav className="flex flex-col gap-2 text-right">
 
-            <NavLink
-              to="/"
-              onClick={closeMenu}
-              className={({ isActive }) => tw(`block [padding:14px] [border-radius:12px] [font-weight:700] ${isActive ? '[background:#2a1a12] [color:#ff8a32]' : '[color:#aaa]'}`)}
-            >
+            <NavLink to="/" onClick={closeMenu}
+              className={({ isActive }) =>
+                `block rounded-xl p-4 font-bold ${
+                  isActive
+                    ? 'bg-[#2a1a12] text-[#ff8a32]'
+                    : 'text-[#aaa]'
+                }`
+              }>
               الرئيسية
             </NavLink>
 
-            <NavLink
-              to="/blog"
-              onClick={closeMenu}
-              className={({ isActive }) => tw(`block [padding:14px] [border-radius:12px] [font-weight:700] ${isActive ? '[background:#2a1a12] [color:#ff8a32]' : '[color:#aaa]'}`)}
-            >
+            <NavLink to="/blog" onClick={closeMenu}
+              className={({ isActive }) =>
+                `block rounded-xl p-4 font-bold ${
+                  isActive
+                    ? 'bg-[#2a1a12] text-[#ff8a32]'
+                    : 'text-[#aaa]'
+                }`
+              }>
               المدونة
             </NavLink>
 
-            <NavLink
-              to="/about"
-              onClick={closeMenu}
-              className={({ isActive }) => tw(`block [padding:14px] [border-radius:12px] [font-weight:700] ${isActive ? '[background:#2a1a12] [color:#ff8a32]' : '[color:#aaa]'}`)}
-            >
+            <NavLink to="/about" onClick={closeMenu}
+              className={({ isActive }) =>
+                `block rounded-xl p-4 font-bold ${
+                  isActive
+                    ? 'bg-[#2a1a12] text-[#ff8a32]'
+                    : 'text-[#aaa]'
+                }`
+              }>
               من نحن
             </NavLink>
 
             <Link
               to="/blog"
               onClick={closeMenu}
-              className={tw("[display:flex] [align-items:center] [justify-content:center] [min-height:52px] [margin-top:8px] [background:#ff6a00] [color:white] [border-radius:30px] [font-weight:800]")}
+              className="mt-2 flex min-h-14 items-center
+                justify-center rounded-full
+                bg-[#ff6a00] font-extrabold text-white"
             >
               ابدأ القراءة
             </Link>
