@@ -137,7 +137,7 @@ export default function Header() {
             <Link
               to="/blog"
               onClick={closeMenu}
-              className="mt-2 flex min-h-11 items-center justify-center rounded-full bg-[#ff6a00] px-4 py-3 text-sm font-bold text-white"
+             className="mt-2 flex min-h-14 items-center justify-center rounded-full bg-[#ff6a00] px-4 py-3 text-sm font-bold text-white max-[640px]:min-h-11"
             >
               ابدأ القراءة
             </Link>
